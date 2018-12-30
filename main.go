@@ -16,7 +16,7 @@ import (
 
 var (
 	aikey     = flag.String("aikey", os.Getenv("AIKEY"), "application insights instrumentation key")
-	namespace = flag.String("namespace", os.Getenv("MY_POD_NAMESPACE"), "deployment namespace")
+	namespace = flag.String("namespace", os.Getenv("MONITOR_NAMESPACE"), "deployment namespace")
 	delay     = flag.Duration("delay", 10*time.Second, "delay between reporting")
 )
 

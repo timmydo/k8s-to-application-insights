@@ -23,6 +23,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MONITOR_NAMESPACE
+              value: {{ required "A valid .Values.monitorNamespace entry required!" .Values.monitorNamespace }}
+            - name: AIKEY
+              value: {{ required "A valid .Values.aikey entry required!" .Values.aikey }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

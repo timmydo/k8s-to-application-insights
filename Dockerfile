@@ -15,4 +15,8 @@ FROM scratch
 
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=build /go/bin/app /go/bin/app
+
+#ENV MONITOR_NAMESPACE=
+#ENV AIKEY=
+
 ENTRYPOINT ["/go/bin/app"]

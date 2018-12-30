@@ -5,14 +5,15 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: timmydo/k8s-to-application-insights
+  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
 monitorNamespace: ""
+aikey: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
