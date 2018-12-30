@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "k8s-to-ai.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ include "k8s-to-ai.name" . }}
     helm.sh/chart: {{ include "k8s-to-ai.chart" . }}
@@ -42,3 +43,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      serviceAccountName: {{ include "k8s-to-ai.name" . }}-serviceaccount

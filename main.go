@@ -54,12 +54,9 @@ func main() {
 			panic(err.Error())
 		}
 
-		log.Printf("There are %d pods in the cluster\n", len(deploy.Items))
 		for _, deployment := range deploy.Items {
-			metricName := fmt.Sprintf("deploymentPercentAvailable_%s_%s_", deployment.Namespace, deployment.Name)
-			pctAvailableValue := float64(deployment.Status.AvailableReplicas) / float64(deployment.Status.Replicas)
-			track(client, metricName, pctAvailableValue)
-			client.Track(appinsights.NewMetricTelemetry(metricName, pctAvailableValue))
+			metricName := fmt.Sprintf("deploymentPercentAvailable_%s_%s", deployment.Namespace, deployment.Name)
+			track(client, metricName, float64(deployment.Status.AvailableReplicas)/float64(deployment.Status.Replicas))
 		}
 
 		pods, err := clientset.CoreV1().Pods(*namespace).List(metav1.ListOptions{})
@@ -70,7 +67,7 @@ func main() {
 		for _, pod := range pods.Items {
 			for idx, podStatus := range pod.Status.ContainerStatuses {
 				metricName := fmt.Sprintf("podRestartCount_%s_%s_%d", pod.Namespace, pod.Name, idx)
-				client.Track(appinsights.NewMetricTelemetry(metricName, float64(podStatus.RestartCount)))
+				track(client, metricName, float64(podStatus.RestartCount))
 			}
 		}
 

@@ -1,4 +1,4 @@
-
+HASH := $(shell git rev-parse --short HEAD)
 
 .PHONY: all
 all: build
@@ -7,9 +7,13 @@ all: build
 build:
 	go build -o k8s-to-ai
 
+.PHONY: version
+version:
+	echo $(HASH)
+
 .PHONY: docker
 docker:
-	docker build -t timmydo/k8s-to-application-insights:latest .
+	docker build -t timmydo/k8s-to-application-insights:git-$(HASH) .
 
 .PHONY: dev
 dev:

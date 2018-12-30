@@ -2,4 +2,18 @@
 Push kubernetes cluster info (deployments, restart counters, etc.) to azure application insights
 
 
-docker build -t timmydo/k8s-to-application-insights:latest .
+## Setup
+
+```
+make docker
+
+cd helm
+helm upgrade --install --debug test1 --set aikey=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX,monitorNamespace=default,image.tag=git-7f1d5cb k8s-to-ai/
+```
+
+## Dev
+
+```
+code .
+make dev
+```
