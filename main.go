@@ -16,6 +16,7 @@ import (
 
 var (
 	aikey     = flag.String("aikey", os.Getenv("AIKEY"), "application insights instrumentation key")
+	cluster   = flag.String("cluster", os.Getenv("MONITOR_CLUSTER"), "deployment cluster name")
 	namespace = flag.String("namespace", os.Getenv("MONITOR_NAMESPACE"), "deployment namespace")
 	delay     = flag.Duration("delay", 10*time.Second, "delay between reporting")
 )
@@ -55,7 +56,7 @@ func main() {
 		}
 
 		for _, deployment := range deploy.Items {
-			metricName := fmt.Sprintf("deploymentPercentAvailable_%s_%s", deployment.Namespace, deployment.Name)
+			metricName := fmt.Sprintf("deploymentPercentAvailable_%s_%s_%s", *cluster, deployment.Namespace, deployment.Name)
 			track(client, metricName, float64(deployment.Status.AvailableReplicas)/float64(deployment.Status.Replicas))
 		}
 
@@ -66,7 +67,7 @@ func main() {
 
 		for _, pod := range pods.Items {
 			for idx, podStatus := range pod.Status.ContainerStatuses {
-				metricName := fmt.Sprintf("podRestartCount_%s_%s_%d", pod.Namespace, pod.Name, idx)
+				metricName := fmt.Sprintf("podRestartCount_%s_%s_%s_%d", *cluster, pod.Namespace, pod.Name, idx)
 				track(client, metricName, float64(podStatus.RestartCount))
 			}
 		}

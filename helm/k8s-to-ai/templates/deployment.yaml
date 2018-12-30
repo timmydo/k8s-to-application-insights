@@ -27,6 +27,8 @@ spec:
           env:
             - name: MONITOR_NAMESPACE
               value: {{ required "A valid .Values.monitorNamespace entry required!" .Values.monitorNamespace }}
+            - name: MONITOR_CLUSTER
+              value: {{ required "A valid .Values.monitorCluster entry required!" .Values.monitorCluster }}
             - name: AIKEY
               value: {{ required "A valid .Values.aikey entry required!" .Values.aikey }}
           resources:

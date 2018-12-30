@@ -13,6 +13,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 monitorNamespace: ""
+monitorCluster: ""
 aikey: ""
 
 resources: {}
